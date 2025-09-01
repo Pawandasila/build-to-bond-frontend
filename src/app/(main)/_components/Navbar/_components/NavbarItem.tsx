@@ -1,24 +1,18 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 interface NavbarItemProps {
-  icon: React.ReactNode;
-  label: string;
-  onClick?: () => void;
-  badge?: string | number;
-  className?: string;
+  icon: React.ReactNode
+  label: string
+  onClick?: () => void
+  badge?: string | number
+  className?: string
 }
 
-const NavbarItem = ({
-  icon,
-  label,
-  onClick,
-  badge,
-  className,
-}: NavbarItemProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+const NavbarItem = ({ icon, label, onClick, badge, className }: NavbarItemProps) => {
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
     <button
@@ -30,6 +24,7 @@ const NavbarItem = ({
         className
       )}
     >
+      {/* Icon with badge */}
       <div className="relative mb-1">
         {icon}
         {badge && (
@@ -38,26 +33,26 @@ const NavbarItem = ({
           </span>
         )}
       </div>
-
-      <span className="text-xs font-medium text-center leading-tight">
-        {label}
-      </span>
-
+      
+      {/* Label */}
+      <span className="text-xs font-medium text-center leading-tight">{label}</span>
+      
+      {/* Animated underline with left-to-right enter and right-to-left exit */}
       <div className="absolute bottom-0 left-0 w-full h-0.5 overflow-hidden">
-        <div
+        <div 
           className={cn(
             "h-full bg-primary transition-all duration-300 ease-out transform",
-            isHovered
-              ? "translate-x-0 scale-x-100"
+            isHovered 
+              ? "translate-x-0 scale-x-100" 
               : "translate-x-full scale-x-0"
           )}
           style={{
-            transformOrigin: isHovered ? "left" : "right",
+            transformOrigin: isHovered ? 'left' : 'right'
           }}
         />
       </div>
     </button>
-  );
-};
+  )
+}
 
-export default NavbarItem;
+export default NavbarItem
