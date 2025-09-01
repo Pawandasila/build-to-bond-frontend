@@ -23,7 +23,7 @@ const Step: React.FC<StepProps> = ({
     <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-8 lg:gap-16`}>
       {/* Content */}
       <div className="flex-1 text-center lg:text-left">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground text-2xl font-bold mb-6 shadow-lg">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white text-2xl font-bold mb-6 shadow-lg">
           {stepNumber}
         </div>
         <h3 className="font-playfair text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
@@ -121,7 +121,7 @@ const HowItWorks: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 size="lg"
-                className="bg-primary hover:bg-primary-600 text-primary-foreground px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-primary hover:bg-primary-600 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 aria-label="Get started with Soulara dating platform"
               >
                 Get Started Now
@@ -129,7 +129,7 @@ const HowItWorks: React.FC = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+                className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
                 aria-label="Learn more about how Soulara works"
               >
                 Learn More
