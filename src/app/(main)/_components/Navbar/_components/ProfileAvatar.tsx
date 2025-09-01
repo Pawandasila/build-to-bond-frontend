@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 interface ProfileAvatarProps {
   src?: string
@@ -29,7 +30,13 @@ const ProfileAvatar = ({ src, name, isOnline = false, className, onClick }: Prof
     >
       <div className="w-8 h-8 rounded-full border-2 border-primary-200 group-hover:border-primary-400 transition-colors overflow-hidden bg-primary-100 flex items-center justify-center">
         {src ? (
-          <img src={src} alt={name} className="w-full h-full object-cover" />
+          <Image 
+            src={src} 
+            alt={name} 
+            width={32}
+            height={32}
+            className="w-full h-full object-cover" 
+          />
         ) : (
           <span className="text-primary-800 text-sm font-medium">
             {initials}

@@ -5,11 +5,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 interface ProfileDropdownProps {
   name: string
@@ -38,7 +38,13 @@ const ProfileDropdown = ({ name, email, src, isOnline = false, className }: Prof
         >
           <div className="w-8 h-8 rounded-full border-2 border-primary-200 group-hover:border-primary-400 transition-colors overflow-hidden bg-primary-100 flex items-center justify-center">
             {src ? (
-              <img src={src} alt={name} className="w-full h-full object-cover" />
+              <Image 
+                src={src} 
+                alt={name} 
+                width={32}
+                height={32}
+                className="w-full h-full object-cover" 
+              />
             ) : (
               <span className="text-primary-800 text-sm font-medium">
                 {initials}
@@ -59,7 +65,13 @@ const ProfileDropdown = ({ name, email, src, isOnline = false, className }: Prof
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-full border-2 border-primary-300 overflow-hidden bg-primary-200 flex items-center justify-center">
               {src ? (
-                <img src={src} alt={name} className="w-full h-full object-cover" />
+                <Image 
+                  src={src} 
+                  alt={name} 
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover" 
+                />
               ) : (
                 <span className="text-primary-800 text-lg font-semibold">
                   {initials}

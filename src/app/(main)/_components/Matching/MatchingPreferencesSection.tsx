@@ -32,7 +32,7 @@ const MatchingPreferencesSection: React.FC = () => {
             className="font-sans text-lg text-muted-foreground max-w-2xl mx-auto"
             role="doc-subtitle"
           >
-            Tell us about yourself and what you're looking for. Our algorithm will help you connect with compatible souls.
+            Tell us about yourself and what you&apos;re looking for. Our algorithm will help you connect with compatible souls.
           </p>
         </header>
 
@@ -85,7 +85,7 @@ const MatchingPreferencesSection: React.FC = () => {
                 </SelectContent>
               </Select>
               <span id="looking-for-help" className="sr-only">
-                Select who you're interested in meeting
+                Select who you&apos;re interested in meeting
               </span>
             </div>
 
@@ -107,7 +107,7 @@ const MatchingPreferencesSection: React.FC = () => {
                 </SelectContent>
               </Select>
               <span id="age-from-help" className="sr-only">
-                Select the minimum age of people you'd like to meet
+                Select the minimum age of people you&apos;d like to meet
               </span>
             </div>
 
@@ -129,7 +129,7 @@ const MatchingPreferencesSection: React.FC = () => {
                 </SelectContent>
               </Select>
               <span id="age-to-help" className="sr-only">
-                Select the maximum age of people you'd like to meet
+                Select the maximum age of people you&apos;d like to meet
               </span>
             </div>
           </div>
