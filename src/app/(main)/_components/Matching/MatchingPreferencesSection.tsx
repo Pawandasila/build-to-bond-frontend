@@ -16,7 +16,7 @@ const MatchingPreferencesSection: React.FC = () => {
 
   return (
     <section 
-      className="bg-gradient-to-b from-background to-primary-50 py-16 px-4 sm:px-6 lg:px-8"
+      className="bg-gradient-to-b from-background to-primary-50 py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
       aria-labelledby="matching-preferences-heading"
       role="region"
     >

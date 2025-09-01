@@ -8,11 +8,11 @@ interface TrustIndicatorProps {
 }
 
 const TrustIndicator: React.FC<TrustIndicatorProps> = ({ icon, text, iconColor, ariaLabel }) => (
-  <div className="flex items-center gap-2" role="listitem">
-    <span className={`w-5 h-5 ${iconColor}`} aria-label={ariaLabel}>
+  <div className="flex items-center gap-2 min-w-0 flex-shrink-0" role="listitem">
+    <span className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColor} flex-shrink-0`} aria-label={ariaLabel}>
       {icon}
     </span>
-    <span className="font-medium">{text}</span>
+    <span className="font-medium text-sm sm:text-base whitespace-nowrap">{text}</span>
   </div>
 )
 
@@ -52,10 +52,10 @@ const TrustIndicators: React.FC = () => {
 
   return (
     <aside 
-      className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-white/80"
+      className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-white/80 px-2 sm:px-0"
       aria-label="Trust indicators and platform benefits"
     >
-      <ul className="flex flex-col sm:flex-row items-center justify-center gap-6" role="list">
+      <ul className="flex flex-col min-[450px]:flex-row sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center min-[450px]:text-left" role="list">
         {indicators.map((indicator, index) => (
           <TrustIndicator
             key={index}
