@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Eye, EyeOff, Mail, Lock, Sparkles } from 'lucide-react'
@@ -29,10 +30,12 @@ const LoginPage = () => {
       {/* Left Side - Image/Visual */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-bl from-primary-500/20 to-primary-700/30" />
-        <img 
+        <Image 
           src="/candid.jpg"
           alt="Login page illustration"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
         />
         {/* Replace this div with your image
         <div className="w-full h-full bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">
@@ -63,7 +66,7 @@ Time to align with your next obsession.</p> */}
              </h1>
              
           </div>
-          <p className="text-xs text-base-500">Your aura's glowing. Someone's about to fall for it.
+          <p className="text-xs text-base-500">Your aura&apos;s glowing. Someone&apos;s about to fall for it.
 Time to align with your next obsession.</p>
         </div>
 
@@ -212,7 +215,7 @@ Time to align with your next obsession.</p>
           {/* Sign Up Link */}
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground font-sans">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link 
                 href="/signup" 
                 className="text-primary-600 hover:text-primary-700 font-medium transition-colors"

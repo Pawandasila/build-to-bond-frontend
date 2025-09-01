@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Eye, EyeOff, Mail, Lock, User, Sparkles, Check } from 'lucide-react'
@@ -90,10 +91,12 @@ const SignupPage = () => {
             </div>
           </div>
         </div> */}
-        <img 
+        <Image 
           src="/candid.jpg" 
           alt="Spiritual journey" 
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
         />
         {/* To use an actual image, replace the above div with:
         <img 
@@ -118,7 +121,7 @@ const SignupPage = () => {
           </div>
           <p className="text-base-600 font-sans text-sm">
             You just stepped into a playground for magnetic souls.
-Let's get you a Soulara.
+Let&apos;s get you a Soulara.
           </p>
         </div>
 
@@ -409,7 +412,7 @@ Let's get you a Soulara.
         {/* Footer */}
         <div className="text-center mt-6">
           <p className="text-xs text-base-500 font-sans">
-            By creating an account, you're joining a community dedicated to spiritual growth and wellness
+            By creating an account, you&apos;re joining a community dedicated to spiritual growth and wellness
           </p>
         </div>
       </div>
