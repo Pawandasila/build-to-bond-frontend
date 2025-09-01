@@ -24,7 +24,6 @@ const NavbarItem = ({ icon, label, onClick, badge, className }: NavbarItemProps)
         className
       )}
     >
-      {/* Icon with badge */}
       <div className="relative mb-1">
         {icon}
         {badge && (
