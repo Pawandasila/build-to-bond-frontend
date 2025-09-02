@@ -54,13 +54,12 @@ function isAuthRoute(pathname: string): boolean {
 
 function isAuthenticated(request: NextRequest): boolean {
   const authToken = request.cookies.get('auth-token')?.value
-  const userSession = request.cookies.get('user-session')?.value
-  const userId = request.cookies.get('user-id')?.value
+  // const userSession = request.cookies.get('user-session')?.value
+  // const userId = request.cookies.get('user-id')?.value
   
   // Only consider authenticated if we have a valid auth token
   // Don't rely on just session or userId cookies as they might be stale
   const hasValidAuth = !!(authToken && authToken.length > 0)
-  console.log(`[Middleware] Auth check - Token: ${!!authToken}, Session: ${!!userSession}, UserId: ${!!userId}, ValidAuth: ${hasValidAuth}`)
   
   return hasValidAuth
 }
@@ -69,34 +68,27 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const isUserAuthenticated = isAuthenticated(request)
   
-  console.log(`[Middleware] Processing: ${pathname}, Authenticated: ${isUserAuthenticated}`)
-  
   // Handle auth routes (login, signup) - Allow access regardless of auth status for now
   if (isAuthRoute(pathname)) {
-    console.log(`[Middleware] Allowing access to auth route: ${pathname} (auth status bypass)`)
     return NextResponse.next()
   }
   
   // Handle public routes
   if (isPublicRoute(pathname)) {
-    console.log(`[Middleware] Allowing access to public route: ${pathname}`)
     return NextResponse.next()
   }
   
   // Handle private routes
   if (isPrivateRoute(pathname)) {
     if (!isUserAuthenticated) {
-      console.log(`[Middleware] Redirecting unauthenticated user from private route ${pathname} to /login`)
       const loginUrl = new URL('/login', request.url)
       loginUrl.searchParams.set('redirect', pathname)
       return NextResponse.redirect(loginUrl)
     }
-    console.log(`[Middleware] Allowing authenticated user access to private route: ${pathname}`)
     return NextResponse.next()
   }
   
   // For any other routes, allow access (treat as public by default)
-  console.log(`[Middleware] Allowing access to unmatched route: ${pathname}`)
   return NextResponse.next()
 }
 
