@@ -10,7 +10,7 @@ const CTAButtons: React.FC = () => {
     >
       <Button 
         size="lg" 
-        className="w-full sm:w-auto bg-primary hover:bg-primary-600 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        className="w-full sm:w-auto bg-primary hover:bg-primary-700 text-white font-sans shadow-sm px-8 py-4 text-lg font-semibold transition-all duration-300"
         aria-label="Start your journey to find meaningful connections"
         type="button"
       >
@@ -19,7 +19,7 @@ const CTAButtons: React.FC = () => {
       <Button 
         variant="outline" 
         size="lg"
-        className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+        className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300"
         aria-label="Learn more about Soulara dating platform"
         type="button"
       >

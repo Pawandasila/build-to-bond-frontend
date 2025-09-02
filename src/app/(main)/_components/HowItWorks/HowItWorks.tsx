@@ -121,7 +121,7 @@ const HowItWorks: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 size="lg"
-                className="bg-primary hover:bg-primary-600 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-primary hover:bg-primary-700 text-white font-sans shadow-sm px-10 py-4 text-lg font-semibold transition-all duration-300"
                 aria-label="Get started with Soulara dating platform"
               >
                 Get Started Now
@@ -129,7 +129,7 @@ const HowItWorks: React.FC = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+                className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-sans px-10 py-4 text-lg font-semibold transition-all duration-300"
                 aria-label="Learn more about how Soulara works"
               >
                 Learn More

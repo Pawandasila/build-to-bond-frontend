@@ -162,7 +162,7 @@ const MatchingPreferencesSection: React.FC = () => {
             <Button 
               type="submit"
               size="lg"
-              className="bg-primary hover:bg-amber-50 hover:text-primary-300 text-white px-12 py-3 text-lg font-semibold rounded-full shadow-lg transition-all duration-300"
+              className="w-full sm:w-auto bg-primary hover:bg-primary-700 text-white font-sans shadow-sm px-8 py-4 text-lg font-semibold transition-all duration-300"
               aria-label="Submit matching preferences and start finding compatible matches"
             >
               Start Matching
