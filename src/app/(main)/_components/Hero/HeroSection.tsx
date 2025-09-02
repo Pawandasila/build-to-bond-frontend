@@ -5,7 +5,7 @@ import Image from "next/image";
 const HeroSection: React.FC = () => {
   return (
     <section
-      className="py-16 lg:py-24 bg-gradient-to-b from-background to-primary-50 min-h-[80vh] flex items-center"
+      className="py-16 lg:py-14 bg-gradient-to-b from-background to-primary-50 min-h-[80vh] flex items-center"
       role="banner"
       aria-label="Hero section - Find your soul connection"
     >
