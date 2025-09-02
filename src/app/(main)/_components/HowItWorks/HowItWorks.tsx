@@ -56,14 +56,14 @@ const HowItWorks: React.FC = () => {
       stepNumber: "1",
       title: "Create Account",
       description: "Register for free & create up your good looking Profile. Tell us about yourself, your interests, and what you&apos;re looking for in a meaningful connection.",
-      imageSrc: "/assets/working/create.jpeg",
+      imageSrc: "/assets/working/create_trans.png",
       imageAlt: "Create your dating profile - Step 1"
     },
     {
       stepNumber: "2", 
       title: "Find Matches",
       description: "Search & Connect with Matches which are perfect for you. Our intelligent algorithm considers your preferences, values, and compatibility factors.",
-      imageSrc: "/assets/working/matches.jpeg",
+      imageSrc: "/assets/working/matches_trans.png",
       imageAlt: "Find compatible matches - Step 2"
     },
     {
