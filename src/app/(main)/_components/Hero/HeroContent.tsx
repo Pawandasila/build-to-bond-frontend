@@ -4,8 +4,8 @@ import TrustIndicators from "./TrustIndicators";
 
 const HeroContent: React.FC = () => {
   return (
-    <div className="relative z-10 flex items-center justify-center h-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="text-center max-w-4xl mx-auto w-full">
+    <div className="relative z-10 flex items-center justify-start h-full px-4 sm:px-6 lg:px-58 py-8 sm:py-12">
+      <div className="text-left max-w-4xl w-full">
         <header className="mb-6 sm:mb-8">
           <h1 className="font-playfair text-3xl min-[450px]:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             <span className="block">Find Your</span>
@@ -16,9 +16,9 @@ const HeroContent: React.FC = () => {
               Soul Connection
             </span>
           </h1>
-
+          
           <p
-            className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2 sm:px-0"
+            className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-xl sm:max-w-2xl leading-relaxed"
             role="doc-subtitle"
             aria-describedby="hero-description"
           >

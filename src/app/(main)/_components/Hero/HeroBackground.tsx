@@ -5,7 +5,7 @@ const HeroBackground: React.FC = () => {
   return (
     <div className="absolute inset-0" role="img" aria-label="Background image of a loving couple">
       <Image 
-        src="/assets/hero/hero.jpg" 
+        src="/assets/hero/couple.jpg" 
         alt="Couple in love representing meaningful connections on Soulara dating platform"
         fill
         className="object-cover object-[center_20%]"
