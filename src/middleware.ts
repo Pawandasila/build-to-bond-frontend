@@ -54,8 +54,8 @@ function isAuthRoute(pathname: string): boolean {
 
 function isAuthenticated(request: NextRequest): boolean {
   const authToken = request.cookies.get('auth-token')?.value
-  const userSession = request.cookies.get('user-session')?.value
-  const userId = request.cookies.get('user-id')?.value
+  // const userSession = request.cookies.get('user-session')?.value
+  // const userId = request.cookies.get('user-id')?.value
   
   // Only consider authenticated if we have a valid auth token
   // Don't rely on just session or userId cookies as they might be stale
