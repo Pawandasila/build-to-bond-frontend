@@ -116,11 +116,13 @@ const SignupPage = () => {
             </div>
           </div> */}
           <Image 
-            src="/candid.jpg" 
+            src="/assets/candid.jpg" 
             alt="Spiritual journey" 
             fill
             className="object-cover"
             priority
+            unoptimized={false}
+            quality={90}
           />
           {/* To use an actual image, replace the above div with:
           <img 

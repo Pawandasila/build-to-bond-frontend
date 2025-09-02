@@ -55,11 +55,13 @@ const LoginPage = () => {
         <div className="hidden lg:flex flex-1 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-bl from-primary-500/20 to-primary-700/30" />
           <Image 
-            src="/candid.jpg"
+            src="/assets/candid.jpg"
             alt="Login page illustration"
             fill
             className="object-cover"
             priority
+            unoptimized={false}
+            quality={90}
           />
           {/* Replace this div with your image
           <div className="w-full h-full bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">

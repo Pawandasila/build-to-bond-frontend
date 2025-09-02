@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Home, ArrowLeft, Heart, Sparkles } from 'lucide-react'
+import { Home, ArrowLeft } from 'lucide-react'
 
 const NotFound = () => {
   return (
