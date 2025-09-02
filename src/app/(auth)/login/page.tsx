@@ -26,7 +26,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-base-50 to-primary-100 flex">
+    <div className="h-screen w-screen fixed inset-0 overflow-hidden bg-gradient-to-br from-primary-50 via-base-50 to-primary-100 flex">
       {/* Left Side - Image/Visual */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-bl from-primary-500/20 to-primary-700/30" />
@@ -52,7 +52,7 @@ const LoginPage = () => {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
+      <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-y-auto">
         <div className="w-full max-w-md">
         {/* Logo Section */}
         <div className="text-center mb-8">
@@ -61,7 +61,7 @@ const LoginPage = () => {
             <h1 className="font-marcellus text-3xl">
               <span className="text-primary-700">Soul</span>
               <span className="text-primary-500">ara</span>
-              {/* <p className="text-xs text-base-500">Your aura's glowing. Someone's about to fall for it.”
+              {/* <p className="text-xs text-base-500">Your aura's glowing. Someone's about to fall for it."
 Time to align with your next obsession.</p> */}
              </h1>
              
