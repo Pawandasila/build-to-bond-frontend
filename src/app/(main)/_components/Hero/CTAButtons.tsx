@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 const CTAButtons: React.FC = () => {
   return (
     <nav 
-      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 px-2 sm:px-0"
+      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-start mb-8 sm:mb-12 px-2 sm:px-0"
       role="navigation"
       aria-label="Primary call-to-action buttons"
     >
