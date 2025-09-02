@@ -62,35 +62,10 @@ const SignupPage = () => {
   const passwordMatch = formData.password === formData.confirmPassword && formData.confirmPassword !== ''
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-base-50 to-primary-100 flex">
+    <div className="h-screen w-screen fixed inset-0 overflow-hidden bg-gradient-to-br from-primary-50 via-base-50 to-primary-100 flex">
       {/* Left Side - Image/Visual */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-bl from-primary-500/20 to-primary-700/30" />
-        {/* Replace this div with your image */}
-        {/* <div className="w-full h-full bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">
-          <div className="text-center text-white p-8">
-            <Sparkles className="w-16 h-16 mx-auto mb-6 opacity-80" />
-            <h3 className="font-playfair text-3xl mb-4">
-              Begin Your Transformation
-            </h3>
-            <p className="font-sans text-lg opacity-90 max-w-md mb-6">
-              Join thousands of souls on their journey to spiritual wellness and inner harmony.
-            </p>
-            <div className="space-y-2 text-left">
-              {[
-                'Personalized meditation practices',
-                'Aura reading and spiritual guidance', 
-                'Supportive spiritual community',
-                'Daily insights and affirmations'
-              ].map((feature, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <Check className="w-4 h-4 text-white/80" />
-                  <span className="text-sm font-sans text-white/90">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
         <Image 
           src="/candid.jpg" 
           alt="Spiritual journey" 
@@ -98,17 +73,10 @@ const SignupPage = () => {
           className="object-cover"
           priority
         />
-        {/* To use an actual image, replace the above div with:
-        <img 
-          src="/path-to-your-image.jpg" 
-          alt="Spiritual journey" 
-          className="w-full h-full object-cover"
-        />
-        */}
       </div>
 
       {/* Right Side - Signup Form */}
-      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
+      <div className="flex-1 flex items-center justify-center p-4 lg:p-8 overflow-y-auto">
         <div className="w-full max-w-lg">
         {/* Logo Section */}
         <div className="text-center mb-8">
@@ -411,9 +379,7 @@ Let&apos;s get you a Soulara.
 
         {/* Footer */}
         <div className="text-center mt-6">
-          <p className="text-xs text-base-500 font-sans">
-            By creating an account, you&apos;re joining a community dedicated to spiritual growth and wellness
-          </p>
+         
         </div>
       </div>
       </div>
