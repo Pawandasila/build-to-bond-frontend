@@ -4,7 +4,7 @@ import TrustIndicators from "./TrustIndicators";
 
 const HeroContent: React.FC = () => {
   return (
-    <div className="relative z-10 flex items-start justify-start h-full px-4 sm:px-6 lg:px-58 py-8 sm:py-12">
+    <div className="relative z-10 flex items-center justify-start h-full px-4 sm:px-6 lg:px-58 py-8 sm:py-12">
       <div className="text-left max-w-4xl w-full">
         <header className="mb-6 sm:mb-8">
           <h1 className="font-playfair text-3xl min-[450px]:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
