@@ -19,10 +19,10 @@ const NotFound = () => {
                 src="/assets/not-found.jpg"
                 alt="Lost in space - astronaut and rocket illustration"
                 width={400}
-                quality={100}
                 height={320}
                 className="w-full h-auto rounded-3xl shadow-2xl object-cover"
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
               />
               
               
