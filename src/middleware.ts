@@ -47,13 +47,11 @@ function isAuthRoute(pathname: string): boolean {
 }
 
 function isAuthenticated(request: NextRequest): boolean {
-  const authToken = request.cookies.get('auth-token')?.value
-  // const userSession = request.cookies.get('user-session')?.value
-  // const userId = request.cookies.get('user-id')?.value
+  const authToken = request.cookies.get('authToken')?.value
+  const userId = request.cookies.get('userId')?.value
   
-  // Only consider authenticated if we have a valid auth token
-  // Don't rely on just session or userId cookies as they might be stale
-  const hasValidAuth = !!(authToken && authToken.length > 0)
+  // Consider authenticated if we have both auth token and user ID
+  const hasValidAuth = !!(authToken && authToken.length > 0 && userId && userId.length > 0)
   
   return hasValidAuth
 }
@@ -62,8 +60,11 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const isUserAuthenticated = isAuthenticated(request)
   
-  // Handle auth routes (login, signup) - Allow access regardless of auth status for now
+  // Handle auth routes (login, signup) - redirect to home if already authenticated
   if (isAuthRoute(pathname)) {
+    if (isUserAuthenticated) {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
     return NextResponse.next()
   }
   

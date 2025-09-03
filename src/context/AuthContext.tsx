@@ -8,6 +8,7 @@ import {
   useEffect,
 } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { authAPI } from "@/lib/api";
 
 const COOKIE_OPTIONS = {
@@ -227,7 +228,7 @@ interface AuthContextType extends AuthState {
     phone: string,
     password: string
   ) => Promise<void>;
-  logout: () => void;
+  logout: (redirectTo?: string) => void;
   updateProfile: (data: Partial<User>) => void;
   clearError: () => void;
 }
@@ -244,6 +245,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const router = useRouter();
 
   useEffect(() => {
     const { token, user } = getAuthData();
@@ -330,9 +332,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = () => {
+  const logout = (redirectTo: string = '/') => {
     clearAuthData();
     dispatch({ type: "LOGOUT" });
+    
+    // Navigate to the specified route (default to home page)
+    router.push(redirectTo);
   };
 
   const updateProfile = (data: Partial<User>) => {

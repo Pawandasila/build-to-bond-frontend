@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 
-const LoginPage = () => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +19,10 @@ const LoginPage = () => {
 
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Get the redirect URL from query parameters
+  const redirectTo = searchParams.get('redirect') || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +32,7 @@ const LoginPage = () => {
     try {
       await login(email, password);
       toast.success("Login successful!");
-      router.push("/");
+      router.push(redirectTo);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed");
       toast.error("Login failed");
@@ -329,6 +333,14 @@ const LoginPage = () => {
         }
       `}</style>
     </>
+  );
+};
+
+const LoginPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 };
 
