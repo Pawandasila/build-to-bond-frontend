@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, User, Sparkles, Check } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Check, Phone } from "lucide-react";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -55,10 +56,8 @@ const SignupPage = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // Handle signup logic here
       console.log("Signup attempt:", formData);
     }, 2000);
   };
@@ -86,7 +85,8 @@ const SignupPage = () => {
         }
       `}</style>
 
-      <div className="min-h-screen max-h-screen bg-gradient-to-br from-primary-50 via-background to-primary-100 dark:from-background dark:via-card dark:to-primary-950 flex items-center justify-center p-3 overflow-hidden">
+      <div className="min-h-screen max-h-screen bg-gradient-to-br from-primary-50 via-background to-primary-100 dark:from-background dark:via-card dark:to-primary-950 flex items-center justify-center p-1 overflow-hidden"
+      >
         <div className="w-full max-w-5xl bg-card/95 dark:bg-card/95 backdrop-blur-xl rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden relative">
           <div className="flex flex-col lg:flex-row relative z-10">
             {/* Image Section */}
@@ -117,14 +117,6 @@ const SignupPage = () => {
             {/* Form Section */}
             <div className="lg:w-[60%] p-6 lg:p-8 flex flex-col justify-center bg-gradient-to-b from-transparent to-background/50 dark:to-card/50">
               <div className="w-full max-w-lg mx-auto">
-                <div className="text-center mb-5 animate-fade-in">
-                  <h2 className="text-2xl font-bold text-foreground mb-1">
-                    Join Soulara
-                  </h2>
-                  <p className="text-muted-foreground text-sm">
-                    Create your account to get started
-                  </p>
-                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -225,6 +217,39 @@ const SignupPage = () => {
 
                   <div className="space-y-1 group">
                     <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-foreground"
+                    >
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground group-focus-within:text-primary-500 transition-colors">
+                        <Phone className="w-4 h-4" />
+                      </div>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) =>
+                          handleInputChange("phone", e.target.value)
+                        }
+                        className={cn(
+                          "w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border-2",
+                          "border-border dark:border-border",
+                          "bg-background dark:bg-input text-foreground",
+                          "placeholder:text-muted-foreground",
+                          "focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20",
+                          "transition-all duration-300",
+                          "hover:border-muted-foreground"
+                        )}
+                        placeholder="Enter your phone number"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1 group">
+                    <label
                       htmlFor="password"
                       className="block text-sm font-medium text-foreground"
                     >
@@ -275,11 +300,11 @@ const SignupPage = () => {
                               className={cn(
                                 "h-1 flex-1 rounded-full transition-colors duration-200",
                                 passwordStrength >= level
-                                  ? level <= 2
-                                    ? "bg-destructive"
-                                    : level <= 3
-                                    ? "bg-primary-400"
-                                    : "bg-primary-600"
+                                  ? passwordStrength <= 2
+                                    ? "bg-red-500"
+                                    : passwordStrength <= 3
+                                    ? "bg-yellow-500"
+                                    : "bg-green-500"
                                   : "bg-border"
                               )}
                             />
@@ -287,12 +312,8 @@ const SignupPage = () => {
                         </div>
                         <p
                           className={cn(
-                            "text-xs",
-                            passwordStrength <= 2
-                              ? "text-destructive"
-                              : passwordStrength <= 3
-                              ? "text-primary-600"
-                              : "text-primary-600"
+                            "text-xs font-medium",
+                            getPasswordStrengthText().color
                           )}
                         >
                           {getPasswordStrengthText().text}
@@ -407,7 +428,7 @@ const SignupPage = () => {
                         Getting ready...
                       </div>
                     ) : (
-                      "Create Account"
+                      "Hook Up"
                     )}
                   </Button>
 
