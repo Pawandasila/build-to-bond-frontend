@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+        port: '',
+        pathname: '/**',
+      }
     ],
     qualities: [75, 90, 100, 95],
     formats: ['image/webp', 'image/avif'],

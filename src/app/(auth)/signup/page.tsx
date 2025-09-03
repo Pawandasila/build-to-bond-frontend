@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, User, Check, Phone } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +23,11 @@ const SignupPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const { signup } = useAuth();
+  const router = useRouter();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -55,11 +63,42 @@ const SignupPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
+    setSuccess("");
 
-    setTimeout(() => {
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
       setIsLoading(false);
-      console.log("Signup attempt:", formData);
-    }, 2000);
+      return;
+    }
+
+    // Validate password strength
+    if (passwordStrength < 4) {
+      setError("Password is too weak. Please create a stronger password.");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await signup(
+        formData.firstName,
+        formData.lastName,
+        formData.email,
+        formData.phone,
+        formData.password
+      );
+      setSuccess("Account created successfully! Please login to continue.");
+      toast.success("Account created successfully! Please login to continue.");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Signup failed");
+      toast.error("Signup failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const passwordMatch =
@@ -68,29 +107,12 @@ const SignupPage = () => {
 
   return (
     <>
-      <style jsx global>{`
-        /* Hide scrollbar for webkit browsers */
-        ::-webkit-scrollbar {
-          display: none;
-        }
-
-        /* Hide scrollbar for Firefox */
-        html {
-          scrollbar-width: none;
-        }
-
-        /* Hide scrollbar for IE/Edge */
-        body {
-          -ms-overflow-style: none;
-        }
-      `}</style>
-
-      <div className="min-h-screen max-h-screen bg-gradient-to-br from-primary-50 via-background to-primary-100 dark:from-background dark:via-card dark:to-primary-950 flex items-center justify-center p-1 overflow-hidden"
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-background to-primary-100 dark:from-background dark:via-card dark:to-primary-950 flex items-center justify-center p-3 md:p-1"
       >
         <div className="w-full max-w-5xl bg-card/95 dark:bg-card/95 backdrop-blur-xl rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden relative">
           <div className="flex flex-col lg:flex-row relative z-10">
-            {/* Image Section */}
-            <div className="lg:w-2/5 h-48 lg:h-auto relative group">
+            {/* Image Section - Hidden on mobile */}
+            <div className="hidden lg:block lg:w-2/5 relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-50 to-primary-100 dark:from-primary-800/20 dark:via-primary-700/30 dark:to-primary-600/40"></div>
               <Image
                 src="/assets/auth/login.png"
@@ -115,11 +137,19 @@ const SignupPage = () => {
             </div>
 
             {/* Form Section */}
-            <div className="lg:w-[60%] p-6 lg:p-8 flex flex-col justify-center bg-gradient-to-b from-transparent to-background/50 dark:to-card/50">
+            <div className="w-full lg:w-[60%] p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
               <div className="w-full max-w-lg mx-auto">
+                <div className="md:hidden block text-center mb-6 animate-fade-in">
+                  <h2 className="text-2xl font-bold text-foreground mb-2">
+                    Start Your Journey
+                  </h2>
+                  <p className="text-muted-foreground text-sm">
+                    Join thousands finding meaningful connections every day.
+                  </p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1 group">
                       <label
                         htmlFor="firstName"
@@ -139,7 +169,7 @@ const SignupPage = () => {
                             handleInputChange("firstName", e.target.value)
                           }
                           className={cn(
-                            "w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border-2",
+                            "w-full pl-10 pr-4 py-3 text-sm rounded-lg border-2",
                             "border-border dark:border-border",
                             "bg-background dark:bg-input text-foreground",
                             "placeholder:text-muted-foreground",
@@ -168,7 +198,7 @@ const SignupPage = () => {
                           handleInputChange("lastName", e.target.value)
                         }
                         className={cn(
-                          "w-full px-4 py-2.5 text-sm rounded-lg border-2",
+                          "w-full px-4 py-3 text-sm rounded-lg border-2",
                           "border-border dark:border-border",
                           "bg-background dark:bg-input text-foreground",
                           "placeholder:text-muted-foreground",
@@ -201,7 +231,7 @@ const SignupPage = () => {
                           handleInputChange("email", e.target.value)
                         }
                         className={cn(
-                          "w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border-2",
+                          "w-full pl-10 pr-4 py-3 text-sm rounded-lg border-2",
                           "border-border dark:border-border",
                           "bg-background dark:bg-input text-foreground",
                           "placeholder:text-muted-foreground",
@@ -234,7 +264,7 @@ const SignupPage = () => {
                           handleInputChange("phone", e.target.value)
                         }
                         className={cn(
-                          "w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border-2",
+                          "w-full pl-10 pr-4 py-3 text-sm rounded-lg border-2",
                           "border-border dark:border-border",
                           "bg-background dark:bg-input text-foreground",
                           "placeholder:text-muted-foreground",
@@ -267,7 +297,7 @@ const SignupPage = () => {
                           handleInputChange("password", e.target.value)
                         }
                         className={cn(
-                          "w-full pl-10 pr-10 py-2.5 text-sm rounded-lg border-2",
+                          "w-full pl-10 pr-10 py-3 text-sm rounded-lg border-2",
                           "border-border dark:border-border",
                           "bg-background dark:bg-input text-foreground",
                           "placeholder:text-muted-foreground",
@@ -341,7 +371,7 @@ const SignupPage = () => {
                           handleInputChange("confirmPassword", e.target.value)
                         }
                         className={cn(
-                          "w-full pl-10 pr-12 py-2.5 text-sm rounded-lg border-2",
+                          "w-full pl-10 pr-12 py-3 text-sm rounded-lg border-2",
                           formData.confirmPassword === ""
                             ? "border-border"
                             : passwordMatch
@@ -408,13 +438,25 @@ const SignupPage = () => {
                     </label>
                   </div>
 
+                  {error && (
+                    <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+                      {error}
+                    </div>
+                  )}
+
+                  {success && (
+                    <div className="text-sm text-green-500 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                      {success}
+                    </div>
+                  )}
+
                   <Button
                     type="submit"
                     disabled={
-                      isLoading || !passwordMatch || passwordStrength < 3
+                      isLoading || !passwordMatch || passwordStrength < 4
                     }
                     className={cn(
-                      "w-full py-2.5 px-4 text-sm rounded-lg font-medium",
+                      "w-full py-3 px-4 text-sm rounded-lg font-medium",
                       "bg-primary-600 hover:bg-primary-700 text-white",
                       "shadow-md hover:shadow-lg",
                       "focus:ring-2 focus:ring-primary-500/25 focus:outline-none",
@@ -447,7 +489,7 @@ const SignupPage = () => {
                     type="button"
                     variant="outline"
                     className={cn(
-                      "w-full py-2.5 px-4 rounded-lg",
+                      "w-full py-3 px-4 rounded-lg",
                       "border-border hover:bg-accent",
                       "transition-all duration-200"
                     )}

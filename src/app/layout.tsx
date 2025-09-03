@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Roboto, Playfair_Display, Plus_Jakarta_Sans, Lora, IBM_Plex_Mono, Marcellus, Montserrat, Homemade_Apple } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/sonner"
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -182,9 +184,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div id="app-root" className="min-h-screen">
-            {children}
-          </div>
+          <AuthProvider>
+            <div id="app-root" className="min-h-screen">
+              {children}
+              <Toaster richColors/>
+            </div>
+          </AuthProvider>
         </ThemeProvider>
         <script
           type="application/ld+json"

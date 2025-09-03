@@ -8,8 +8,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
+import { useAuth } from '@/context/AuthContext'
 
 interface ProfileDropdownProps {
   name: string
@@ -20,12 +21,18 @@ interface ProfileDropdownProps {
 }
 
 const ProfileDropdown = ({ name, email, src, isOnline = false, className }: ProfileDropdownProps) => {
+  const { logout } = useAuth();
+  
   const initials = name
     .split(' ')
     .map(n => n[0])
     .join('')
     .toUpperCase()
     .slice(0, 2)
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <DropdownMenu>
@@ -36,25 +43,19 @@ const ProfileDropdown = ({ name, email, src, isOnline = false, className }: Prof
             className
           )}
         >
-          <div className="w-8 h-8 rounded-full border-2 border-primary-200 group-hover:border-primary-400 transition-colors overflow-hidden bg-primary-100 flex items-center justify-center">
-            {src ? (
-              <Image 
-                src={src} 
-                alt={name} 
-                width={32}
-                height={32}
-                className="w-full h-full object-cover" 
-              />
-            ) : (
-              <span className="text-primary-800 text-sm font-medium">
+          <div className="relative">
+            <Avatar className="w-8 h-8 border-2 border-primary-200 group-hover:border-primary-400 transition-colors">
+              <AvatarImage src={src} alt={name} />
+              <AvatarFallback className="bg-primary-100 text-primary-800 text-sm font-medium">
                 {initials}
-              </span>
+              </AvatarFallback>
+            </Avatar>
+            
+            {/* Online Status Indicator */}
+            {isOnline && (
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-background rounded-full"></div>
             )}
           </div>
-          
-          {isOnline && (
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-background rounded-full"></div>
-          )}
         </button>
       </DropdownMenuTrigger>
       
@@ -62,21 +63,12 @@ const ProfileDropdown = ({ name, email, src, isOnline = false, className }: Prof
         {/* Profile Header */}
         <div className="p-4 bg-gradient-to-r from-primary-50 to-primary-100 border-b border-border">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-full border-2 border-primary-300 overflow-hidden bg-primary-200 flex items-center justify-center">
-              {src ? (
-                <Image 
-                  src={src} 
-                  alt={name} 
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-cover" 
-                />
-              ) : (
-                <span className="text-primary-800 text-lg font-semibold">
-                  {initials}
-                </span>
-              )}
-            </div>
+            <Avatar className="w-12 h-12 border-2 border-primary-300">
+              <AvatarImage src={src} alt={name} />
+              <AvatarFallback className="bg-primary-200 text-primary-800 text-lg font-semibold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-foreground truncate">{name}</p>
               <p className="text-sm text-muted-foreground truncate">{email}</p>
@@ -122,7 +114,10 @@ const ProfileDropdown = ({ name, email, src, isOnline = false, className }: Prof
 
           <DropdownMenuSeparator className="my-2" />
 
-          <DropdownMenuItem className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer hover:bg-destructive/10 focus:bg-destructive/10 text-destructive focus:text-destructive">
+          <DropdownMenuItem 
+            className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer hover:bg-destructive/10 focus:bg-destructive/10 text-destructive focus:text-destructive"
+            onClick={handleLogout}
+          >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
