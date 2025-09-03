@@ -1,7 +1,11 @@
+'use client'
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 const CTAButtons: React.FC = () => {
+  const router = useRouter();
   return (
     <nav 
       className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center lg:items-start"
@@ -14,7 +18,7 @@ const CTAButtons: React.FC = () => {
         aria-label="Start your journey to find meaningful connections"
         type="button"
         onClick={() => {
-          window.location.href = '/find-match';
+          router.push('/find-match');
         }}
       >
         Start Your Journey
