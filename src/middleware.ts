@@ -16,13 +16,7 @@ const authRoutes = ['/login', '/signup']
 // Define private routes that require authentication
 const privateRoutes = [
   '/profile',
-  '/profile/edit',
-  '/profile/orders',
-  '/profile/addresses',
-  '/profile/wishlist',
-  '/profile/privacy',
-  '/profile/terms',
-  '/dashboard',
+  '/find-match',
   '/admin'
 ]
 
