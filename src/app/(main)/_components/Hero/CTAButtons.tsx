@@ -13,6 +13,9 @@ const CTAButtons: React.FC = () => {
         className="w-full sm:w-auto bg-primary hover:bg-primary-700 text-white font-sans shadow-sm px-8 py-4 text-lg font-semibold transition-all duration-300"
         aria-label="Start your journey to find meaningful connections"
         type="button"
+        onClick={() => {
+          window.location.href = '/find-match';
+        }}
       >
         Start Your Journey
       </Button>
