@@ -1,8 +1,42 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Phone, Video, Send, Mic, MoreVertical, Search, Plus, ArrowLeft } from 'lucide-react'
+import { Phone, Video, Send, Mic, Search, Plus, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
+// Speech Recognition types
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+  resultIndex: number;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+  message: string;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  maxAlternatives: number;
+  start(): void;
+  stop(): void;
+  abort(): void;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onstart: (() => void) | null;
+  onend: (() => void) | null;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognition;
+}
+
+interface WindowWithSpeechRecognition extends Window {
+  SpeechRecognition?: SpeechRecognitionConstructor;
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+}
 
 // Message interface
 interface Message {
@@ -446,17 +480,22 @@ const ChatPage = () => {
                         size="sm"
                         className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 text-base-500 hover:text-primary-600 hover:bg-primary-50 p-1.5 sm:p-2"
                         onClick={async () => {
+                            const windowWithSpeech = window as WindowWithSpeechRecognition
                             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
                                 alert('Speech recognition is not supported in this browser.')
                                 return
                             }
-                            const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+                            const SpeechRecognition = windowWithSpeech.SpeechRecognition || windowWithSpeech.webkitSpeechRecognition
+                            if (!SpeechRecognition) {
+                                alert('Speech recognition is not available.')
+                                return
+                            }
                             const recognition = new SpeechRecognition()
                             recognition.lang = 'en-US'
                             recognition.interimResults = false
                             recognition.maxAlternatives = 1
 
-                            recognition.onresult = (event: any) => {
+                            recognition.onresult = (event: SpeechRecognitionEvent) => {
                                 const transcript = event.results[0][0].transcript
                                 setMessage(prev => prev ? prev + ' ' + transcript : transcript)
                             }
