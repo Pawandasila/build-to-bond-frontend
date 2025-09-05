@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Phone, Video, Send, Mic, MoreVertical, Search, Plus } from 'lucide-react'
+import { Phone, Video, Send, Mic, MoreVertical, Search, Plus, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 // Message interface
@@ -71,7 +71,7 @@ const EmojiPicker = ({ onEmojiSelect, onClose }: { onEmojiSelect: (emoji: string
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof emojiCategories>('smileys')
 
   return (
-    <div className="absolute bottom-16 left-0 bg-white border border-base-200 rounded-2xl shadow-xl p-4 w-80 z-50">
+    <div className="absolute bottom-16 left-0 bg-white border border-base-200 rounded-2xl shadow-xl p-4 w-80 sm:w-72 md:w-80 z-50 max-w-[90vw]">
       <div className="flex justify-between items-center mb-3">
         <h3 className="font-sans font-medium text-base-700">Add Emoji</h3>
         <Button variant="ghost" size="sm" onClick={onClose} className="text-base-500 hover:text-base-700">
@@ -237,21 +237,34 @@ const ChatPage = () => {
     <div className="min-h-screen bg-background">
       {/* Enhanced Navbar */}
       <nav className="border-b border-base-200 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
-        <div className="px-6 py-2 flex items-center justify-between">
-          <h1 className="font-marcellus text-2xl text-primary-700">
+        <div className="px-4 sm:px-6 py-2 flex items-center justify-between">
+          {/* Mobile back button when chat is selected */}
+          {selectedChat && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedChat(null)}
+              className="md:hidden text-base-600 hover:text-primary-600 hover:bg-primary-50 p-2"
+              aria-label="Back to chat list"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          )}
+          
+          <h1 className="font-marcellus text-xl sm:text-2xl text-primary-700">
             Soul<span className="text-primary-500">ara</span>
           </h1>
         </div>
       </nav>
 
-      <div className="flex h-[calc(100vh-80px)]">
+      <div className="flex h-[calc(100vh-60px)] sm:h-[calc(100vh-80px)]">
         {/* Enhanced Left Sidebar - Chat List */}
         {hasChats && (
-          <div className="w-130 border-r border-base-200 bg-background flex flex-col">
+          <div className={`w-full sm:w-80 md:w-96 lg:w-130 border-r border-base-200 bg-background flex flex-col ${selectedChat ? 'hidden md:flex' : 'flex'}`}>
             {/* Chat List Header */}
-            <div className="p-4 border-b border-base-200 bg-base-25">
+            <div className="p-3 sm:p-4 border-b border-base-200 bg-base-25">
               <div className="flex items-center justify-between mb-3">
-                <h2 className="font-sans font-semibold text-base-800">Messages</h2>
+                <h2 className="font-sans font-semibold text-base-800 text-sm sm:text-base">Messages</h2>
                
               </div>
               
@@ -274,31 +287,31 @@ const ChatPage = () => {
                 <div
                   key={chat.id}
                   onClick={() => setSelectedChat(chat)}
-                  className={`p-4 border-b border-base-100 cursor-pointer transition-all duration-200 hover:bg-base-50 relative ${
+                  className={`p-3 sm:p-4 border-b border-base-100 cursor-pointer transition-all duration-200 hover:bg-base-50 relative ${
                     selectedChat?.id === chat.id ? 'bg-primary-50 border-l-4 border-l-primary-500' : ''
                   }`}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="relative">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center shadow-sm">
-                        <span className="font-sans font-semibold text-primary-700 text-sm">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center shadow-sm">
+                        <span className="font-sans font-semibold text-primary-700 text-xs sm:text-sm">
                           {chat.name[0]}
                         </span>
                       </div>
                       {chat.isOnline && (
-                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-400 border-2 border-white rounded-full"></div>
+                        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 border-2 border-white rounded-full"></div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-sans font-semibold text-base-800 truncate">
+                        <h3 className="font-sans font-semibold text-base-800 truncate text-sm sm:text-base">
                           {chat.name}
                         </h3>
                         <span className="text-xs text-base-400">
                           {formatTime(chat.messages[chat.messages.length - 1]?.timestamp || new Date())}
                         </span>
                       </div>
-                      <p className="text-sm text-base-600 truncate font-sans">
+                      <p className="text-xs sm:text-sm text-base-600 truncate font-sans">
                         {chat.lastText}
                       </p>
                     </div>
@@ -310,24 +323,24 @@ const ChatPage = () => {
         )}
 
         {/* Enhanced Main Chat Area */}
-        <div className="flex-1 flex flex-col">
+        <div className={`flex-1 flex flex-col ${selectedChat ? 'flex' : 'hidden md:flex'}`}>
           {selectedChat ? (
             <>
               {/* Enhanced Chat Header */}
-              <div className="p-4 border-b border-base-200 bg-background/95 backdrop-blur flex items-center justify-between">
+              <div className="p-3 sm:p-4 border-b border-base-200 bg-background/95 backdrop-blur flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center">
-                      <span className="font-sans font-semibold text-primary-700 text-sm">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center">
+                      <span className="font-sans font-semibold text-primary-700 text-xs sm:text-sm">
                         {selectedChat.name[0]}
                       </span>
                     </div>
                     {selectedChat.isOnline && (
-                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+                      <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 border-2 border-white rounded-full"></div>
                     )}
                   </div>
                   <div>
-                    <h3 className="font-sans font-semibold text-base-800">
+                    <h3 className="font-sans font-semibold text-base-800 text-sm sm:text-base">
                       {selectedChat.name}
                     </h3>
                     <p className="text-xs text-base-500">
@@ -337,16 +350,16 @@ const ChatPage = () => {
                 </div>
                 
                 <div className="flex items-center space-x-1">
-                  <Button variant="ghost" size="sm" className="text-base-600 hover:text-primary-600 hover:bg-primary-50">
+                  <Button variant="ghost" size="sm" className="text-base-600 hover:text-primary-600 hover:bg-primary-50 p-2">
                     <Phone className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-base-600 hover:text-primary-600 hover:bg-primary-50">
+                  <Button variant="ghost" size="sm" className="text-base-600 hover:text-primary-600 hover:bg-primary-50 p-2">
                     <Video className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-base-600 hover:text-primary-600 hover:bg-primary-50"
+                    className="text-base-600 hover:text-primary-600 hover:bg-primary-50 hidden md:flex p-2"
                     onClick={() => setSelectedChat(null)}
                     aria-label="Close chat"
                   >
@@ -357,7 +370,7 @@ const ChatPage = () => {
                       viewBox="0 0 16 16"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-8 h-8"
+                      className="w-6 h-6 sm:w-8 sm:h-8"
                     >
                       <path
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
@@ -370,15 +383,15 @@ const ChatPage = () => {
 
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto bg-gradient-to-b from-base-25 to-base-50/50">
-                <div className="p-4 space-y-4">
+                <div className="p-3 sm:p-4 space-y-4">
                   {selectedChat.messages.map((msg) => (
                     <div
                       key={msg.id}
                       className={`flex ${msg.isOwn ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2 duration-300`}
                     >
-                      <div className={`max-w-[70%] space-y-1 ${msg.isOwn ? 'items-end' : 'items-start'} flex flex-col`}>
+                      <div className={`max-w-[85%] sm:max-w-[70%] space-y-1 ${msg.isOwn ? 'items-end' : 'items-start'} flex flex-col`}>
                         <div
-                          className={`px-4 py-3 rounded-2xl font-sans text-sm leading-relaxed shadow-sm ${
+                          className={`px-3 py-2 sm:px-4 sm:py-3 rounded-2xl font-sans text-sm leading-relaxed shadow-sm ${
                             msg.isOwn
                               ? 'bg-primary-500 text-white rounded-br-md'
                               : 'bg-white text-base-800 rounded-bl-md border border-base-200'
@@ -397,17 +410,17 @@ const ChatPage = () => {
               </div>
 
               {/* Enhanced Message Input */}
-              <div className="p-4 border-t border-base-200 bg-background/95 backdrop-blur">
-                <div className="flex items-end space-x-3 relative" ref={emojiPickerRef}>
+              <div className="p-3 sm:p-4 border-t border-base-200 bg-background/95 backdrop-blur">
+                <div className="flex items-end space-x-2 sm:space-x-3 relative" ref={emojiPickerRef}>
                   {/* Plus/Emoji Button */}
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="h-12 w-12 rounded-full text-base-500 hover:text-primary-600 hover:bg-primary-50 flex-shrink-0"
+                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full text-base-500 hover:text-primary-600 hover:bg-primary-50 flex-shrink-0"
                     aria-label="Add emoji"
                   >
-                    <Plus className={`w-5 h-5 transition-transform duration-200 ${showEmojiPicker ? 'rotate-45' : ''}`} />
+                    <Plus className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${showEmojiPicker ? 'rotate-45' : ''}`} />
                   </Button>
                   
                   {/* Emoji Picker */}
@@ -425,13 +438,13 @@ const ChatPage = () => {
                       onKeyPress={handleKeyPress}
                       placeholder="waiting for your messages..."
                       rows={1}
-                      className="w-full px-4 py-3 pr-12 border border-base-200 rounded-2xl bg-white text-base-800 placeholder-base-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-300 font-sans resize-none transition-all duration-200 shadow-sm"
-                      style={{ minHeight: '48px', maxHeight: '120px' }}
+                      className="w-full px-3 py-2 pr-10 sm:px-4 sm:py-3 sm:pr-12 border border-base-200 rounded-2xl bg-white text-base-800 placeholder-base-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-300 font-sans resize-none transition-all duration-200 shadow-sm text-sm"
+                      style={{ minHeight: '40px', maxHeight: '120px' }}
                     />
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-base-500 hover:text-primary-600 hover:bg-primary-50 p-2"
+                        className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 text-base-500 hover:text-primary-600 hover:bg-primary-50 p-1.5 sm:p-2"
                         onClick={async () => {
                             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
                                 alert('Speech recognition is not supported in this browser.')
@@ -454,16 +467,16 @@ const ChatPage = () => {
                         }}
                         aria-label="Record message"
                     >
-                        <Mic className="w-4 h-4" />
+                        <Mic className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </Button>
                   </div>
                   <Button
                     size="sm"
                     onClick={handleSendMessage}
                     disabled={!message.trim()}
-                    className="h-12 w-12 rounded-full bg-primary-500 hover:bg-primary-600 disabled:bg-base-200 disabled:text-base-400 text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
+                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary-500 hover:bg-primary-600 disabled:bg-base-200 disabled:text-base-400 text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
                   >
-                    <Send className="w-5 h-5" />
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </div>
               </div>
@@ -471,21 +484,21 @@ const ChatPage = () => {
           ) : (
             /* Enhanced Default State */
             <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-br from-base-25 via-primary-25 to-base-50">
-              <div className="max-w-lg text-center space-y-8 px-6">
+              <div className="max-w-lg text-center space-y-6 sm:space-y-8 px-4 sm:px-6">
                 {/* Enhanced Doodle Image */}
                 <img 
                   src="/messages_trans.png" 
                   alt="Messages illustration"
-                  className="w-100 h-150 mx-auto object-contain"
+                  className="w-80 h-80 sm:w-100 sm:h-150 mx-auto object-contain"
                 />
 
                 {/* Enhanced Action Button */}
                 {!hasChats && (
                   <div className="space-y-4">
-                    <Button className="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-sans px-8 py-3 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105">
+                    <Button className="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-sans px-6 py-2.5 sm:px-8 sm:py-3 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 text-sm sm:text-base">
                       Find Your Soul Connection
                     </Button>
-                    <p className="text-sm text-base-500 font-sans">
+                    <p className="text-xs sm:text-sm text-base-500 font-sans">
                       Start by exploring profiles and sending a message to someone who resonates with your soul.
                     </p>
                   </div>
